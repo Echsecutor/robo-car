@@ -22,17 +22,18 @@
         </div>
         <div class="row">
             <div class="col">
-                <button type="button" class="btn btn-danger">Reboot</button>
+                <button type="button" class="btn btn-danger" onClick="reboot()">Reboot</button>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <textarea></textarea>
+                <textarea id="out_terminal"></textarea>
             </div>
         </div>
     </div>
 
     <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 
 </html>

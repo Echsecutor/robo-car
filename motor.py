@@ -39,41 +39,86 @@ class Motor:
             print("Speed needs to be in percent.")
         self.pmw.ChangeDutyCycle(speed)
 
+class Car:
+    front_left: Motor
+    front_right:Motor
+    back_left: Motor
+    back_right:Motor
+    
+    def __init__(self, front_left : Motor, front_right:Motor, back_left: Motor, back_right:Motor):
+        self.front_left= front_left
+        self.front_right=front_right
+        self.back_left=back_left
+        self.back_right=back_right
 
-motors = [
+    def motors(self) -> list[Motor]:
+        return [self.front_left, self.front_right, self.back_left, self.back_right]
+
+    def forward(self):
+        for motor in self.motors():
+            motor.forward()
+
+    def backward(self):
+        for motor in self.motors():
+            motor.backward()
+    
+    def stop(self):
+        for motor in self.motors():
+            motor.stop()
+
+    def set_speed(self, speed):
+        for motor in self.motors():
+            motor.set_speed(speed)
+
+    def turn_left(self):
+        self.front_right.forward()
+        self.front_left.backward()
+        self.back_right.forward()
+        self.back_left.backward()
+        
+    def turn_left(self):
+        self.front_right.backward()
+        self.front_left.forward()
+        self.back_right.backward()
+        self.back_left.forward()
+
+        
+
+car = Car(
     Motor(3, 2, 4),
-    Motor(14, 15, 18)
-]
+    Motor(14, 15, 18),
+    Motor(9,11,10),
+    Motor(27, 17, 22)
+    )
 
 def main(args):
 
-    print("Motor test")
+    print("CAR TEST")
 
     print("forward")
-    for motor in motors:
-        motor.forward()
+    car.forward()
 
-    for speed in range(100,-1,-5):
-        for motor in motors:
-            print("speed " + str(speed))
-            motor.set_speed(speed)
+    for speed in range(100,50,-10):
+        print("speed " + str(speed))
+        car.set_speed(speed)
         time.sleep(0.5)
 
-    time.sleep(1)
     print("stop")
-    for motor in motors:
-        motor.stop()
+    car.stop()
     time.sleep(1)
 
     print("backward")
-    for motor in motors:
-        motor.backward()
+    car.backward()
 
-    for speed in range(100,-1,-5):
-        for motor in motors:
-            print("speed " + str(speed))
-            motor.set_speed(speed)
+    for speed in range(100,50,-10):
+        print("speed " + str(speed))
+        car.set_speed(speed)
         time.sleep(0.5)
+
+    print("stop")
+    car.stop()
+    time.sleep(1)
+
 
     print("finished")
 
