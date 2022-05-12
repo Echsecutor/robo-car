@@ -1,6 +1,6 @@
 # Robo Car
-I am currently building a small robotor (car) with my son from a Raspberrypi and a couple of motors.
 
+This is a small toy robot project that I am currently working on with my son. We are building a robot (?) car (?) something :wink: from a Raspberrypi and a couple of motors. There is [a little bit of python code ](/src/) and the [description of which parts we put together along with some pictures](/hardware/).
 
 
 
