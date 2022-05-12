@@ -50,6 +50,7 @@ class Car:
         self.front_right=front_right
         self.back_left=back_left
         self.back_right=back_right
+        self.set_speed(100)
 
     def motors(self) -> list[Motor]:
         return [self.front_left, self.front_right, self.back_left, self.back_right]
@@ -76,7 +77,7 @@ class Car:
         self.back_right.forward()
         self.back_left.backward()
         
-    def turn_left(self):
+    def turn_right(self):
         self.front_right.backward()
         self.front_left.forward()
         self.back_right.backward()
