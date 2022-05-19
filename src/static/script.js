@@ -5,7 +5,7 @@ function terminal_add (text) {
 }
 
 async function set_motor (position, side, action) {
-  terminal_add('setting motor ' + position + ' ' + side + ' to ' + action)
+  terminal_add('Sending command to set motor ' + position + ' ' + side + ' to ' + action)
   let response_body = await post_and_get_response('/set_motor', {"position" : position, "side": side, "action": action})
   terminal_add(response_body)
 }
