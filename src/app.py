@@ -19,7 +19,7 @@ def reboot():
 
 @app.route("/poweroff")
 def poweroff():
-    subprocess.Popen(["sudo", "poweroff", "now"])
+    subprocess.Popen(["sudo", "poweroff"])
     return "Shutting Down..."
 
 
