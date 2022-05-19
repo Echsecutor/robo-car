@@ -1,6 +1,6 @@
 import subprocess
 from urllib import request
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, request
 from motor import car
 
 app = Flask(__name__)
@@ -15,11 +15,18 @@ def index():
 def reboot():
     subprocess.Popen(["sudo", "reboot", "now"])
     return "Rebooting..."
-    #return redirect(url_for("index"), 307)
+
+
+@app.route("/poweroff")
+def poweroff():
+    subprocess.Popen(["sudo", "poweroff", "now"])
+    return "Shutting Down..."
+
 
 @app.route("/set_motor", methods=['POST'])
 def set_motor():
     instructions = request.get_json()
+
     if not instructions:
         return "No instructions given"
     if "position" not in instructions.keys():

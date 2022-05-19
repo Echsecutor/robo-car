@@ -12,11 +12,19 @@ async function set_motor (position, side, action) {
 
 async function reboot () {
   if (window.confirm('Really reboot?')) {
-    terminal_add('Rebooting')
+    terminal_add('Sending reboot command...')
     let response_body = await get_response_body('/reboot')
     terminal_add(response_body)
   }
 }
+
+async function poweroff () {
+    if (window.confirm('Really Shut Down?')) {
+      terminal_add('Sending shutdown command...')
+      let response_body = await get_response_body('/poweroff')
+      terminal_add(response_body)
+    }
+  }
 
 async function get_response_body (url) {
   let response = await fetch(url)
