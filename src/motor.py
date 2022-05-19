@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import re
 import sys
 import time
 import RPi.GPIO as GPIO
@@ -29,7 +30,7 @@ class Motor:
     def backward(self):
         GPIO.output(self.pins[0], GPIO.LOW)
         GPIO.output(self.pins[1], GPIO.HIGH)
-    
+
     def stop(self):
         GPIO.output(self.pins[0], GPIO.LOW)
         GPIO.output(self.pins[1], GPIO.LOW)
@@ -39,36 +40,43 @@ class Motor:
             print("Speed needs to be in percent.")
         self.pmw.ChangeDutyCycle(speed)
 
+
 class Car:
     front_left: Motor
-    front_right:Motor
+    front_right: Motor
     back_left: Motor
-    back_right:Motor
-    
-    def __init__(self, front_left : Motor, front_right:Motor, back_left: Motor, back_right:Motor):
-        self.front_left= front_left
-        self.front_right=front_right
-        self.back_left=back_left
-        self.back_right=back_right
+    back_right: Motor
+
+    def __init__(self, front_left: Motor, front_right: Motor, back_left: Motor, back_right: Motor):
+        self.front_left = front_left
+        self.front_right = front_right
+        self.back_left = back_left
+        self.back_right = back_right
         self.set_speed(100)
 
-    def motors(self) -> list[Motor]:
+    def all_motors(self) -> list[Motor]:
         return [self.front_left, self.front_right, self.back_left, self.back_right]
 
+    def structured_motors(self) -> dict[dict[Motor]]:
+        return {
+            "front": {"left": self.front_left, "right": self.front_right},
+            "back": {"left": self.back_left, "right": self.back_right}
+        }
+
     def forward(self):
-        for motor in self.motors():
+        for motor in self.all_motors():
             motor.forward()
 
     def backward(self):
-        for motor in self.motors():
+        for motor in self.all_motors():
             motor.backward()
-    
+
     def stop(self):
-        for motor in self.motors():
+        for motor in self.all_motors():
             motor.stop()
 
     def set_speed(self, speed):
-        for motor in self.motors():
+        for motor in self.all_motors():
             motor.set_speed(speed)
 
     def turn_left(self):
@@ -76,21 +84,21 @@ class Car:
         self.front_left.backward()
         self.back_right.forward()
         self.back_left.backward()
-        
+
     def turn_right(self):
         self.front_right.backward()
         self.front_left.forward()
         self.back_right.backward()
         self.back_left.forward()
 
-        
 
 car = Car(
     Motor(3, 2, 4),
     Motor(14, 15, 18),
-    Motor(9,11,10),
+    Motor(9, 11, 10),
     Motor(27, 17, 22)
-    )
+)
+
 
 def main(args):
 
@@ -99,7 +107,7 @@ def main(args):
     print("forward")
     car.forward()
 
-    for speed in range(100,50,-10):
+    for speed in range(100, 50, -10):
         print("speed " + str(speed))
         car.set_speed(speed)
         time.sleep(0.5)
@@ -111,7 +119,7 @@ def main(args):
     print("backward")
     car.backward()
 
-    for speed in range(100,50,-10):
+    for speed in range(100, 50, -10):
         print("speed " + str(speed))
         car.set_speed(speed)
         time.sleep(0.5)
@@ -119,7 +127,6 @@ def main(args):
     print("stop")
     car.stop()
     time.sleep(1)
-
 
     print("finished")
 

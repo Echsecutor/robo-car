@@ -5,4 +5,5 @@ textarea {
     padding: 8px;
     font-family: courier new;
     width: 100%;
+    min-height: 50ex;
 }

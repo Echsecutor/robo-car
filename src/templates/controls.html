@@ -13,21 +13,42 @@
     <title>Robo Raspi Controls</title>
 </head>
 
-<body>
+<body onload="load_banner();">
     <div class="container">
+        <div class="row">
+            <div class="col">
+                <textarea id="out_terminal"></textarea>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <h1>Robo Raspi Controls</h1>
             </div>
         </div>
+
         <div class="row">
-            <div class="col">
-                <button type="button" class="btn btn-danger" onClick="reboot()">Reboot</button>
-            </div>
+            <div class="col-2"></div>
+            <div class="col-5"><h3>Left</h3></div>
+            <div class="col-5"><h3>Right</h3></div>
         </div>
+        {%for position in ["front","back"] %}
+        <div class="row">
+            <div class="col-2"><h3>{{ position }}</h3></div>
+            {%for side in ["left","right"] %}
+            <div class="col-5">
+                {%for action in ["forward","stop", "backward"] %}
+                <button type="button" class="btn btn-primary" onClick="set_motor('{{ position }}', '{{side}}', '{{action}}');">{{action}}</button><br>
+                {%endfor%}
+            </div>
+            {%endfor%}
+        </div>
+        {%endfor%}
+
+        
+
         <div class="row">
             <div class="col">
-                <textarea id="out_terminal"></textarea>
+                <button type="button" class="btn btn-danger" onClick="reboot();">Reboot</button>
             </div>
         </div>
     </div>
