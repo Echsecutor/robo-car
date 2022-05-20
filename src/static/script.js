@@ -23,6 +23,7 @@ async function poweroff () {
       terminal_add('Sending shutdown command...')
       let response_body = await get_response_body('/poweroff')
       terminal_add(response_body)
+      goodbye()
     }
   }
 
@@ -47,3 +48,10 @@ async function load_banner () {
   let response_body = await get_response_body('/static/banner.txt')
   terminal_add(response_body)
 }
+
+
+async function goodbye () {
+    let response_body = await get_response_body('/static/goodbye.txt')
+    terminal_add(response_body)
+  }
+
